@@ -1,0 +1,13 @@
+{{extend 'layout.html'}}
+
+{{block header}}
+<div class="jumbotron">
+    <h1 class="display-3">{{=page.title}}</h1>
+    <p>{{=page.created_on}}</p>
+</div>
+{{end}}
+{{=XML(page.body)}}
+
+<div>
+    {{=A('edit', _href=URL('edit', args=[page.id]))}}
+</div>

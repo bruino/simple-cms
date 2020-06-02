@@ -4,10 +4,28 @@
 # this file is released under public domain and you can use without limitations
 # -------------------------------------------------------------------------
 
-# ---- example index page ----
 def index():
-    response.flash = T("Hello World")
-    return dict(message=T('Welcome to web2py!'))
+    """List pages"""
+    pages = db().select(db.page_cms.id, db.page_cms.title, orderby=db.page_cms.title)
+    return dict(pages=pages)
+
+def show():
+    """Show a page"""
+    page = db.page_cms[request.args(0, cast=int)] or redirect(URL('index'))
+    return dict(page=page)
+
+@auth.requires_login()
+def create():
+    """Create page"""
+    form = SQLFORM(db.page_cms).process(next=URL('index'))
+    return dict(form=form)
+
+@auth.requires_login()
+def edit():
+    """Edit an existing page"""
+    page = db.page_cms[request.args(0, cast=int)] or redirect(URL('index'))
+    form = SQLFORM(db.page_cms, page).process(next=URL('show',args=request.args))
+    return dict(form=form)
 
 # ---- API (example) -----
 @auth.requires_login()

@@ -153,3 +153,10 @@ if configuration.get('scheduler.enabled'):
 # after defining tables, uncomment below to enable auditing
 # -------------------------------------------------------------------------
 # auth.enable_record_versioning(db)
+db.define_table('page_cms',
+                Field('title'),
+                Field('body', 'text'),
+                Field('created_on', 'datetime', default=request.now),
+                Field('created_by', 'reference auth_user', default=auth.user_id),
+                format='%(title)s'
+                )
