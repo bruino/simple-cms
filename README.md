@@ -1,14 +1,12 @@
-# Template Welcome for Web2py
-Clean web2py application with `.gitignore` preconfigured.
+# Simple CMS for Web2py
 
 ## Install
 - Install [web2py](web2py.com)
 - Clone in `web2py/applications` :
-```
-git clone https://github.com/bruino/welcome
-```
-Or in Web2py Admin Interface, in section "upload":
-- URL: https://github.com/bruino/welcome.git.
+    - CMS No UI - Editors browse the site as a visitor would and make changes by selecting the edit page icon.  
+    `git clone -b CMS-No-UI --single-branch https://github.com/bruino/simple-cms.git`
+
+**NOTE:** The master branch is a normal web2py application (CMS No UI).
 
 ## Support
 Send email to <bruino@hotmail.es>
