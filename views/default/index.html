@@ -1,5 +1,13 @@
 {{extend 'layout.html'}}
 
+{{block header}}
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">List pages</h1>
+        {{if auth.user:}} {{=A('Create page', _href=URL('create'))}} {{pass}}
+    </div>
+</div>
+{{end}}
 <ul>
     {{for page in pages:}}
         <li>{{=A(page.title, _href=URL('show', args=[page.id]))}}</li>

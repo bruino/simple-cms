@@ -6,12 +6,13 @@
 
 def index():
     """List pages"""
-    pages = db().select(db.page_cms.id, db.page_cms.title, orderby=db.page_cms.title)
+    pages = db().select(db.page_cms.id, db.page_cms.title, orderby=~db.page_cms.id)
     return dict(pages=pages)
 
 def show():
     """Show a page"""
     page = db.page_cms[request.args(0, cast=int)] or redirect(URL('index'))
+    response.title = page.title
     return dict(page=page)
 
 @auth.requires_login()
@@ -26,6 +27,14 @@ def edit():
     page = db.page_cms[request.args(0, cast=int)] or redirect(URL('index'))
     form = SQLFORM(db.page_cms, page).process(next=URL('show',args=request.args))
     return dict(form=form)
+
+@auth.requires_signature()
+def save():
+    """POST. Save page"""
+    body = request.post_vars.body
+    page_id = request.post_vars.page_id
+    id = db(db.page_cms.id == int(page_id)).update(body=body) if not None in (body, page_id) else None
+    return HTTP(200) if id else HTTP(403)
 
 # ---- API (example) -----
 @auth.requires_login()

@@ -1,13 +1,17 @@
-{{extend 'layout.html'}}
+{{extend 'default/layout_page_cms.html' if auth.user else 'layout.html'}}
 
 {{block header}}
 <div class="jumbotron">
-    <h1 class="display-3">{{=page.title}}</h1>
-    <p>{{=page.created_on}}</p>
+    <div class="container">
+        <h1 class="display-3">{{=page.title}}</h1>
+        <p class="lead">{{=page.created_on}}</p>
+    </div>
 </div>
 {{end}}
-{{=XML(page.body)}}
-
-<div>
-    {{=A('edit', _href=URL('edit', args=[page.id]))}}
+<div data-editable data-name="body">
+    {{if page.body:}}
+        {{=XML(page.body)}}
+    {{else:}}
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum alias expedita optio maiores beatae doloribus incidunt adipisci temporibus pariatur non, laudantium molestiae, dignissimos cum commodi cupiditate ad blanditiis! Velit, optio!</p>
+    {{pass}}
 </div>
